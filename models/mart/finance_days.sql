@@ -4,7 +4,7 @@
 WITH orders_per_day AS ( 
 SELECT
 date_date
-,COUNT (DISTINCT orders_id) as transactions
+,COUNT (DISTINCT orders_id) as nb_transactions
 ,ROUND (SUM(revenue),2) as revenue
 ,ROUND (SUM(margin),2) as margin
 ,ROUND (SUM (operational_margin),2) as operational_margin
