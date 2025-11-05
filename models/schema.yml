@@ -1,0 +1,52 @@
+version: 2
+sources:
+  - name: raw
+    schema: gz_raw_data
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: "Table des ventes brutes contenant les transactions, les produits vendus et les revenus associés."
+        columns:
+          - name: date_date
+            description: "Date de la transaction."
+          - name: orders_id
+            description: "Identifiant unique de la commande."
+          - name: pdt_id
+            description: "Identifiant du produit acheté dans la commande."
+          - name: revenue
+            description: "Revenu généré pour la ligne de commande."
+          - name: quantity
+            description: "Quantité du produit vendu dans la transaction."
+        tests:
+          - unique:
+             column_name: "concat(orders_id, '-', pdt_id)"
+      - name: product
+        identifier: raw_gz_product
+        description: "Table des produits bruts contenant les caractéristiques des produits vendus."
+        columns:
+          - name: products_id
+            description: "Identifiant unique du produit."
+            tests:
+              - unique
+              - not_null
+          - name: name
+            description: "Nom commercial du produit."
+          - name: category
+            description: "Catégorie du produit."
+          - name: purchse_price
+            description: "Prix d'achat du produit depuis le fournisseur. Mal orthographié dans la source brute."
+      - name: ship
+        identifier: raw_gz_ship
+        description: "Table des coûts et frais liés à la livraison des commandes."
+        columns:
+          - name: orders_id
+            description: "Identifiant unique de la commande associée à la livraison."
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: "Frais de livraison facturés au client."
+          - name: shipping_fee_1
+            description: "Colonne dupliquée des frais de livraison. Identique à shipping_fee."
+          - name: ship_cost
+            description: "Coût payé pour expédier la commande au client."
